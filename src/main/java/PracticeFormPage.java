@@ -2,37 +2,53 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class PracticeFormPage {
+public class PracticeFormPage extends BasePage {
 
     private WebDriver driver;
-    private final By name = By.cssSelector("#firstName");
-    private final By Lastname = By.cssSelector("#lastName");
-    private final By email = By.cssSelector("#userEmail");
+    private final By nameLocator = By.cssSelector("#firstName");
+    private final By LastNameLocator = By.cssSelector("#lastName");
+    private final By emailLocator = By.cssSelector("#userEmail");
+
+    private GenderSection genderSection;
 
     public PracticeFormPage(WebDriver driver){
-        this.driver = driver;
+        super(driver);
+        driver.get(baseURL.concat("automation-practice-form"));
+        genderSection = new GenderSection(driver);
     }
 
-    public void setName(String nameAsString){
-        WebElement nameSpace = driver.findElement(name);
-        nameSpace.click();
-        nameSpace.sendKeys(nameAsString);
+    public GenderSection genderSection(){
+        return this.genderSection;
+    }
+
+    public void setName(String name){
+       type(nameLocator,name);
 
     }
 
-    public void setLastname(String lastNameAsString ){
-        WebElement nameSpace = driver.findElement(Lastname);
-        nameSpace.click();
-        nameSpace.sendKeys(lastNameAsString);
+    public void setLastName(String lastName ){
+        type(LastNameLocator , lastName);
 
     }
 
     public void setEmail(String mailAddress){
-        WebElement nameSpace = driver.findElement(email);
-        nameSpace.click();
-        nameSpace.sendKeys(mailAddress);
+        type(emailLocator,mailAddress);
 
 
+    }
+
+    public String getName(){
+      return find(nameLocator).getAttribute("value");
+
+    }
+
+    public String getlastName(){
+       return find(LastNameLocator).getAttribute("value");
+
+    }
+
+    public String getEmail(){
+        return find(emailLocator).getAttribute("value");
     }
 
 
