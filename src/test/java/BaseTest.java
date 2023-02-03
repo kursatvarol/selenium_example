@@ -1,19 +1,20 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class BaseTest {
 
     protected WebDriver driver;
-
+    // static String browser = System.getProperty("browser");
 
     @BeforeAll
-    public void setUp(){
+    public static void setUp(){
+        WebDriverManager.chromedriver().setup();
         System.setProperty("webdriver.chrome.driver","drivers/chromedriver.exe");
-        driver = new ChromeDriver();
+        // driver = new ChromeDriver();
         System.out.println("Test Initiated");
-
     }
 
     @BeforeEach
@@ -22,13 +23,13 @@ public class BaseTest {
     }
 
     @AfterEach
-    public void afterMethod(){
+    public void afterMethod() {
         driver.quit();
     }
 
     @AfterAll
-    public void tearDown(){
-        driver.quit();
+    public static void tearDown(){
+        // driver.quit();
         System.out.println("Test Finished");
 
 
